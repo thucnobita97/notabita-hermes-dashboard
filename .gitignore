@@ -1,0 +1,11 @@
+# Generated files
+dist/
+data/latest.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
