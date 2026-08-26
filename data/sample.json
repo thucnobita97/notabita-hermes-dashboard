@@ -1,0 +1,111 @@
+{
+  "updated_at": "2026-08-27T14:30:00+07:00",
+  "repos": [
+    {
+      "name": "hermes-sync-git",
+      "branch": "main",
+      "sha": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0",
+      "commit_message": "fix: correct timezone handling in cron scheduler",
+      "commit_date": "2026-08-27T12:15:00+07:00",
+      "ahead": 2,
+      "behind": 0
+    },
+    {
+      "name": "hermes-openwebui-stack",
+      "branch": "main",
+      "sha": "f9e8d7c6b5a4f3e2d1c0b9a8f7e6d5c4b3a2f1e0",
+      "commit_message": "feat: add MCP tool discovery panel",
+      "commit_date": "2026-08-26T18:42:00+07:00",
+      "ahead": 0,
+      "behind": 1
+    },
+    {
+      "name": "hermes-agent (fork)",
+      "branch": "main",
+      "sha": "1234567890abcdef1234567890abcdef12345678",
+      "commit_message": "custom: add dashboard sync hook",
+      "commit_date": "2026-08-27T09:30:00+07:00",
+      "ahead": 14,
+      "behind": 3
+    }
+  ],
+  "fork": {
+    "ahead": 14,
+    "behind": 3,
+    "patches": [
+      "custom: add dashboard sync hook",
+      "feat: plugin hot-reload on config change",
+      "fix: memory compaction race condition",
+      "custom: Thai timezone support for cron",
+      "feat: subagent result caching",
+      "fix: browser-use session cleanup on timeout",
+      "custom: WSL interop path normalization",
+      "feat: skill auto-patch on stale detection",
+      "fix: delegate_task truncation recovery",
+      "custom: Telegram markdown v2 escaping",
+      "feat: observer hook for gateway health",
+      "fix: session_search FTS5 token boundary",
+      "custom: model fallback chain config",
+      "feat: cron job watermark persistence"
+    ]
+  },
+  "skills": {
+    "total": 63,
+    "categories": {
+      "hermes": 14,
+      "software-development": 12,
+      "gstack": 9,
+      "devops": 7,
+      "research": 5,
+      "communication": 4,
+      "creative": 3,
+      "mlops/research": 3,
+      "memory-pattern": 2,
+      "mcp": 2,
+      "dogfood": 1,
+      "autonomous-ai-agents": 1
+    }
+  },
+  "plugins": [
+    { "name": "superpowers", "enabled": true },
+    { "name": "gstack", "enabled": true },
+    { "name": "codegraph", "enabled": true },
+    { "name": "everything", "enabled": true },
+    { "name": "custom-tools", "enabled": false }
+  ],
+  "cron": [
+    { "name": "hermes-sync-git" },
+    { "name": "dashboard-data-refresh" },
+    { "name": "memory-compaction-weekly" }
+  ],
+  "memory": {
+    "used": 908,
+    "limit": 3000
+  },
+  "gateway": {
+    "status": "ok",
+    "http_code": 200,
+    "last_check": "2026-08-27T14:28:00+07:00"
+  },
+  "containers": [
+    { "name": "open-webui", "status": "running" },
+    { "name": "mongodb", "status": "running" }
+  ],
+  "activity": [
+    { "repo": "hermes-sync-git", "sha": "a1b2c3d4e5f6a7b8", "message": "fix: correct timezone handling in cron scheduler", "date": "2026-08-27T12:15:00+07:00" },
+    { "repo": "hermes-agent (fork)", "sha": "1234567890abcdef", "message": "custom: add dashboard sync hook", "date": "2026-08-27T09:30:00+07:00" },
+    { "repo": "hermes-openwebui-stack", "sha": "f9e8d7c6b5a4f3e2", "message": "feat: add MCP tool discovery panel", "date": "2026-08-26T18:42:00+07:00" },
+    { "repo": "hermes-sync-git", "sha": "b2c3d4e5f6a7b8c9", "message": "refactor: simplify git diff parsing", "date": "2026-08-26T14:20:00+07:00" },
+    { "repo": "hermes-agent (fork)", "sha": "abcdef1234567890", "message": "feat: plugin hot-reload on config change", "date": "2026-08-26T11:05:00+07:00" },
+    { "repo": "hermes-openwebui-stack", "sha": "d7c6b5a4f3e2d1c0", "message": "fix: docker compose volume mount path", "date": "2026-08-25T22:30:00+07:00" },
+    { "repo": "hermes-sync-git", "sha": "c3d4e5f6a7b8c9d0", "message": "feat: add SSH key rotation support", "date": "2026-08-25T16:45:00+07:00" },
+    { "repo": "hermes-agent (fork)", "sha": "567890abcdef1234", "message": "fix: memory compaction race condition", "date": "2026-08-25T10:12:00+07:00" },
+    { "repo": "hermes-openwebui-stack", "sha": "e2d1c0b9a8f7e6d5", "message": "chore: bump open-webui to v0.5.4", "date": "2026-08-24T20:00:00+07:00" },
+    { "repo": "hermes-sync-git", "sha": "d4e5f6a7b8c9d0e1", "message": "docs: update sync-all.sh usage guide", "date": "2026-08-24T15:30:00+07:00" }
+  ],
+  "providers": [
+    "alibaba",
+    "deepseek",
+    "deepinfra"
+  ]
+}
