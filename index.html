@@ -371,7 +371,7 @@ footer{
   // ── Load data ──
   async function loadData(){
     try{
-      const resp=await fetch('data/latest.json');
+      const resp=await fetch('data/latest.json?t='+Date.now());
       if(!resp.ok)throw new Error(resp.status);
       const data=await resp.json();
       render(data);
