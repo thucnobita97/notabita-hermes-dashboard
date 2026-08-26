@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Hermes Dashboard</title>
+<style>
+/* ── Reset & Base ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#1a1a2e;--card:#16213e;--accent:#0f3460;--pop:#e94560;
+  --text:#e0e0e0;--muted:#8892a4;--border:#2a2a4a;
+  --green:#2ecc71;--yellow:#f1c40f;--red:#e74c3c;
+  --radius:12px;--shadow:0 4px 24px rgba(0,0,0,.35);
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+html{font-size:15px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;line-height:1.55}
+a{color:var(--pop);text-decoration:none}
+
+/* ── Password Overlay ── */
+#pw-overlay{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .4s;
+}
+#pw-overlay.hidden{opacity:0;pointer-events:none}
+#pw-box{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:2.5rem 2rem;width:min(360px,90vw);text-align:center;
+  box-shadow:var(--shadow);
+}
+#pw-box h2{margin-bottom:1rem;font-size:1.2rem;color:var(--pop)}
+#pw-input{
+  width:100%;padding:.65rem .8rem;border:1px solid var(--border);border-radius:8px;
+  background:var(--bg);color:var(--text);font-size:1rem;outline:none;
+  margin-bottom:.8rem;
+}
+#pw-input:focus{border-color:var(--pop)}
+#pw-btn{
+  width:100%;padding:.65rem;border:none;border-radius:8px;
+  background:var(--pop);color:#fff;font-size:1rem;cursor:pointer;
+  transition:background .2s;
+}
+#pw-btn:hover{background:#d63a55}
+#pw-error{color:var(--red);font-size:.85rem;margin-top:.5rem;min-height:1.2em}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.shake{animation:shake .45s}
+
+/* ── Header ── */
+header{
+  text-align:center;padding:2rem 1rem 1rem;
+}
+header h1{font-size:1.6rem;letter-spacing:.5px}
+header h1 span{color:var(--pop)}
+header p{color:var(--muted);font-size:.85rem;margin-top:.25rem}
+
+/* ── Grid ── */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+  gap:1.25rem;
+  max-width:1280px;margin:0 auto;padding:0 1.25rem 2rem;
+}
+
+/* ── Card ── */
+.card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.3rem 1.4rem;box-shadow:var(--shadow);
+  opacity:0;transform:translateY(18px);
+  animation:cardIn .5s forwards;
+}
+@keyframes cardIn{to{opacity:1;transform:translateY(0)}}
+.card h3{font-size:1rem;color:var(--pop);margin-bottom:.75rem;display:flex;align-items:center;gap:.45rem}
+.card h3 .icon{font-size:1.15rem}
+
+/* ── Repo sub-cards ── */
+.repo-cards{display:flex;flex-direction:column;gap:.75rem}
+.repo-item{background:var(--bg);border-radius:8px;padding:.75rem .9rem;border:1px solid var(--border)}
+.repo-item .name{font-weight:600;font-size:.92rem;margin-bottom:.3rem}
+.repo-item .branch{font-size:.78rem;color:var(--muted)}
+.repo-item .commit{font-size:.82rem;margin-top:.3rem}
+.repo-item .commit .sha{color:var(--pop);font-family:monospace}
+.repo-item .ahead-behind{font-size:.78rem;margin-top:.25rem;color:var(--muted)}
+.ahead-behind .ahead{color:var(--green)}
+.ahead-behind .behind{color:var(--red)}
+
+/* ── Lists ── */
+ul.plain{list-style:none}
+ul.plain li{padding:.3rem 0;border-bottom:1px solid var(--border);font-size:.88rem;display:flex;align-items:center;gap:.4rem}
+ul.plain li:last-child{border-bottom:none}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot.green{background:var(--green)}.dot.red{background:var(--red)}.dot.yellow{background:var(--yellow)}.dot.muted{background:var(--muted)}
+
+/* ── Bar chart (skills) ── */
+.bar-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.35rem;font-size:.82rem}
+.bar-label{width:110px;text-align:right;color:var(--muted);flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-track{flex:1;height:14px;background:var(--bg);border-radius:7px;overflow:hidden}
+.bar-fill{height:100%;background:var(--pop);border-radius:7px;transition:width .6s}
+.bar-count{width:28px;font-size:.78rem;color:var(--muted)}
+
+/* ── Progress bar (memory) ── */
+.mem-bar-track{width:100%;height:22px;background:var(--bg);border-radius:11px;overflow:hidden;margin:.5rem 0 .3rem}
+.mem-bar-fill{height:100%;border-radius:11px;transition:width .6s}
+.mem-label{font-size:.85rem;color:var(--muted)}
+
+/* ── Timeline ── */
+.timeline{position:relative;padding-left:1.4rem}
+.timeline::before{content:'';position:absolute;left:5px;top:4px;bottom:4px;width:2px;background:var(--border)}
+.tl-item{position:relative;margin-bottom:.7rem;font-size:.85rem}
+.tl-item::before{content:'';position:absolute;left:-1.4rem;top:6px;width:10px;height:10px;border-radius:50%;background:var(--pop);border:2px solid var(--card)}
+.tl-item .tl-time{font-size:.75rem;color:var(--muted)}
+.tl-item .tl-repo{font-size:.75rem;color:var(--accent);font-weight:600}
+.tl-item .tl-msg{margin-top:.1rem}
+
+/* ── Status badge ── */
+.status-badge{
+  display:inline-flex;align-items:center;gap:.35rem;
+  padding:.25rem .7rem;border-radius:20px;font-size:.82rem;font-weight:600;
+}
+.status-badge.ok{background:rgba(46,204,113,.15);color:var(--green)}
+.status-badge.warn{background:rgba(241,196,15,.15);color:var(--yellow)}
+.status-badge.err{background:rgba(231,76,60,.15);color:var(--red)}
+
+/* ── Footer ── */
+footer{
+  text-align:center;padding:1.5rem 1rem 2rem;color:var(--muted);font-size:.8rem;
+  border-top:1px solid var(--border);max-width:1280px;margin:0 auto;
+}
+
+/* ── Unavailable ── */
+.unavailable{text-align:center;padding:3rem 1rem;color:var(--muted)}
+.unavailable h2{color:var(--red);margin-bottom:.5rem}
+
+/* ── Responsive ── */
+@media(max-width:720px){
+  .grid{grid-template-columns:1fr;padding:0 .75rem 2rem}
+  header h1{font-size:1.3rem}
+}
+
+/* ── Patch list ── */
+.patch-list{max-height:180px;overflow-y:auto;margin-top:.4rem}
+.patch-list li{font-size:.82rem;padding:.25rem 0}
+
+/* ── Container grid ── */
+.container-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.container-item{background:var(--bg);border-radius:8px;padding:.55rem .7rem;border:1px solid var(--border);font-size:.85rem;display:flex;align-items:center;gap:.4rem}
+</style>
+</head>
+<body>
+
+<!-- Password Gate -->
+<div id="pw-overlay">
+  <div id="pw-box">
+    <h2>🔒 Hermes Dashboard</h2>
+    <input type="password" id="pw-input" placeholder="Enter password" autocomplete="off">
+    <button id="pw-btn">Unlock</button>
+    <div id="pw-error"></div>
+  </div>
+</div>
+
+<!-- Main Content (hidden until auth) -->
+<div id="app" style="display:none">
+  <header>
+    <h1>⚡ <span>Hermes</span> Dashboard</h1>
+    <p>Real-time infrastructure overview</p>
+  </header>
+  <div id="content" class="grid"></div>
+  <footer id="footer"></footer>
+</div>
+
+<script>
+(function(){
+  // ── Password Gate ──
+  const HASH='dfccb6acab9b1171074e6f5c33d8182cacbee5c01792fe97c97cd997a76e837f';
+  const overlay=document.getElementById('pw-overlay');
+  const pwInput=document.getElementById('pw-input');
+  const pwBtn=document.getElementById('pw-btn');
+  const pwError=document.getElementById('pw-error');
+  const app=document.getElementById('app');
+
+  if(sessionStorage.getItem('hermes_auth')==='1'){
+    overlay.classList.add('hidden');
+    app.style.display='';
+    loadData();
+  }
+
+  async function sha256(msg){
+    const buf=new TextEncoder().encode(msg);
+    const hash=await crypto.subtle.digest('SHA-256',buf);
+    return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function tryAuth(){
+    const val=pwInput.value;
+    if(!val)return;
+    const h=await sha256(val);
+    if(h===HASH){
+      sessionStorage.setItem('hermes_auth','1');
+      overlay.classList.add('hidden');
+      app.style.display='';
+      loadData();
+    } else {
+      pwError.textContent='Incorrect password';
+      const box=document.getElementById('pw-box');
+      box.classList.remove('shake');
+      void box.offsetWidth;
+      box.classList.add('shake');
+      pwInput.value='';
+      pwInput.focus();
+    }
+  }
+
+  pwBtn.addEventListener('click',tryAuth);
+  pwInput.addEventListener('keydown',e=>{if(e.key==='Enter')tryAuth()});
+
+  // ── Relative time ──
+  function relTime(iso){
+    if(!iso)return 'unknown';
+    const d=new Date(iso);
+    const s=Math.floor((Date.now()-d.getTime())/1000);
+    if(s<60)return s+'s ago';
+    const m=Math.floor(s/60);if(m<60)return m+'m ago';
+    const h=Math.floor(m/60);if(h<24)return h+'h ago';
+    const dy=Math.floor(h/24);if(dy<30)return dy+'d ago';
+    const mo=Math.floor(dy/30);if(mo<12)return mo+'mo ago';
+    return Math.floor(mo/12)+'y ago';
+  }
+
+  // ── Card animation delay ──
+  let cardIdx=0;
+  function cardDelay(){return (cardIdx++)*0.07+'s'}
+
+  // ── Build card HTML ──
+  function card(title,icon,body,span){
+    const s=span?' style="grid-column:span '+span+'"':'';
+    return '<div class="card"'+s+'><h3><span class="icon">'+icon+'</span>'+title+'</h3>'+body+'</div>';
+  }
+
+  // ── Render ──
+  function render(data){
+    const c=document.getElementById('content');
+    cardIdx=0;
+    let html='';
+
+    // 1. Repos Overview
+    const repos=data.repos||[];
+    let repoHtml='<div class="repo-cards">';
+    repos.forEach(r=>{
+      const sha=(r.sha||'').substring(0,7);
+      repoHtml+='<div class="repo-item">'
+        +'<div class="name">'+esc(r.name||'unknown')+'</div>'
+        +'<div class="branch">🌿 '+esc(r.branch||'main')+'</div>'
+        +'<div class="commit"><span class="sha">'+sha+'</span> '+esc(r.commit_message||'')+' <span style="color:var(--muted)">— '+relTime(r.commit_date)+'</span></div>'
+        +'<div class="ahead-behind"><span class="ahead">↑'+(r.ahead||0)+'</span> / <span class="behind">↓'+(r.behind||0)+'</span></div>'
+        +'</div>';
+    });
+    repoHtml+='</div>';
+    html+=card('Repos Overview','📦',repoHtml);
+
+    // 2. Fork Status
+    const fork=data.fork||data.repos&&data.repos.find(r=>(r.name||'').toLowerCase().includes('fork'))||{};
+    const patches=fork.patches||[];
+    let forkBody='<div style="margin-bottom:.5rem"><strong style="color:var(--green)">↑ '+(fork.ahead||0)+'</strong> patches ahead &nbsp; <strong style="color:var(--red)">↓ '+(fork.behind||0)+'</strong> behind upstream</div>';
+    if(patches.length){
+      forkBody+='<div class="patch-list"><ul class="plain">';
+      patches.forEach(p=>{forkBody+='<li>• '+esc(p)+'</li>'});
+      forkBody+='</ul></div>';
+    }
+    html+=card('Fork Status','🔀',forkBody);
+
+    // 3. Skills
+    const sk=data.skills||{};
+    const cats=sk.categories||{};
+    const total=sk.total||0;
+    let skillBody='<div style="font-size:1.4rem;font-weight:700;margin-bottom:.6rem">'+total+' <span style="font-size:.85rem;color:var(--muted);font-weight:400">skills</span></div>';
+    const catEntries=Object.entries(cats).sort((a,b)=>b[1]-a[1]);
+    const maxCat=catEntries.length?catEntries[0][1]:1;
+    catEntries.forEach(([name,count])=>{
+      const pct=Math.round(count/maxCat*100);
+      skillBody+='<div class="bar-row"><span class="bar-label">'+esc(name)+'</span><div class="bar-track"><div class="bar-fill" style="width:'+pct+'%"></div></div><span class="bar-count">'+count+'</span></div>';
+    });
+    html+=card('Skills','🧠',skillBody);
+
+    // 4. Plugins
+    const plugins=data.plugins||[];
+    let plugBody='<ul class="plain">';
+    plugins.forEach(p=>{
+      const on=p.enabled!==false;
+      plugBody+='<li><span class="dot '+(on?'green':'red')+'"></span>'+esc(p.name||p)+'</li>';
+    });
+    plugBody+='</ul>';
+    html+=card('Plugins','🔌',plugBody);
+
+    // 5. Cron Jobs
+    const cron=data.cron||[];
+    let cronBody='<div style="font-size:1.4rem;font-weight:700;margin-bottom:.5rem">'+cron.length+' <span style="font-size:.85rem;color:var(--muted);font-weight:400">jobs</span></div><ul class="plain">';
+    cron.forEach(j=>{cronBody+='<li>⏱ '+esc(j.name||j)+'</li>'});
+    cronBody+='</ul>';
+    html+=card('Cron Jobs','⏰',cronBody);
+
+    // 6. Memory
+    const mem=data.memory||{};
+    const used=mem.used||0,limit=mem.limit||1;
+    const pct=Math.min(100,Math.round(used/limit*100));
+    const memColor=pct>85?'var(--red)':pct>60?'var(--yellow)':'var(--green)';
+    let memBody='<div class="mem-label">'+used.toLocaleString()+' / '+limit.toLocaleString()+' chars ('+pct+'%)</div>'
+      +'<div class="mem-bar-track"><div class="mem-bar-fill" style="width:'+pct+'%;background:'+memColor+'"></div></div>';
+    html+=card('Memory','💾',memBody);
+
+    // 7. Gateway Health
+    const gw=data.gateway||{};
+    const httpCode=gw.http_code||0;
+    const gwOk=httpCode===200;
+    const gwClass=gwOk?'ok':(httpCode>=500?'err':'warn');
+    const gwLabel=gw.status||gwOk?'OK':'Error';
+    let gwBody='<div class="status-badge '+gwClass+'"><span class="dot '+(gwOk?'green':'red')+'"></span>'+gwLabel+' — HTTP '+httpCode+'</div>'
+      +'<div style="margin-top:.6rem;font-size:.82rem;color:var(--muted)">Last check: '+relTime(gw.last_check||data.updated_at)+'</div>';
+    html+=card('Gateway Health','🌐',gwBody);
+
+    // 8. Stack Containers
+    const containers=data.containers||[];
+    let contBody='<div class="container-grid">';
+    containers.forEach(ct=>{
+      const run=(ct.status||'').toLowerCase()==='running';
+      contBody+='<div class="container-item"><span class="dot '+(run?'green':'red')+'"></span>'+esc(ct.name||'unknown')+'</div>';
+    });
+    contBody+='</div>';
+    html+=card('Stack Containers','🐳',contBody);
+
+    // 9. Activity Timeline
+    const activity=data.activity||[];
+    let tlBody='<div class="timeline">';
+    activity.slice(0,10).forEach(a=>{
+      tlBody+='<div class="tl-item">'
+        +'<div class="tl-repo">'+esc(a.repo||'')+'</div>'
+        +'<div class="tl-msg">'+esc(a.message||'')+'</div>'
+        +'<div class="tl-time">'+relTime(a.date)+' · <span style="font-family:monospace">'+(a.sha||'').substring(0,7)+'</span></div>'
+        +'</div>';
+    });
+    tlBody+='</div>';
+    html+=card('Activity Timeline','📜',tlBody);
+
+    // 10. Provider Models
+    const providers=data.providers||[];
+    let provBody='<ul class="plain">';
+    providers.forEach(p=>{provBody+='<li><span class="dot green"></span>'+esc(typeof p==='string'?p:p.name||'')+'</li>'});
+    provBody+='</ul>';
+    html+=card('Provider Models','🤖',provBody);
+
+    c.innerHTML=html;
+    // stagger animation
+    c.querySelectorAll('.card').forEach((el,i)=>{el.style.animationDelay=i*0.07+'s'});
+
+    // Footer
+    document.getElementById('footer').innerHTML='Last updated: '+(data.updated_at?new Date(data.updated_at).toLocaleString():'unknown')+'<br>Auto-updated via sync-all.sh';
+  }
+
+  function esc(s){
+    if(!s)return '';
+    const d=document.createElement('div');d.textContent=s;return d.innerHTML;
+  }
+
+  function showUnavailable(){
+    document.getElementById('content').innerHTML='<div class="unavailable" style="grid-column:1/-1"><h2>⚠ Data Unavailable</h2><p>Could not load latest.json</p><p style="font-size:.82rem;margin-top:.5rem">Checked at '+new Date().toLocaleString()+'</p></div>';
+    document.getElementById('footer').innerHTML='Auto-updated via sync-all.sh';
+  }
+
+  // ── Load data ──
+  async function loadData(){
+    try{
+      const resp=await fetch('data/latest.json');
+      if(!resp.ok)throw new Error(resp.status);
+      const data=await resp.json();
+      render(data);
+    }catch(e){
+      console.error('Data load failed:',e);
+      showUnavailable();
+    }
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+{
+  "repos": [
+    {
+      "name": "hermes-sync-git",
+      "path": "/home/thucnobita/.hermes",
+      "branch": "main",
+      "last_commit": {
+        "hash": "9804e9f5a83187c433a3024458a8b38400f2030c",
+        "short": "9804e9f",
+        "message": "hermes-sync: THUCNOBITA 2026-08-26 17:06:17 UTC — feat: hermes-machine-setup skill + sync-all.sh — 7-phase fresh machine orchestration",
+        "date": "2026-08-27T00:06:17+07:00"
+      },
+      "ahead": 0,
+      "behind": 0
+    },
+    {
+      "name": "hermes-openwebui-stack",
+      "path": "/home/thucnobita/dev/hermes-openwebui-stack",
+      "branch": "main",
+      "last_commit": {
+        "hash": "0f60c8b797058cbb30a8919a44481ec0d6f893d4",
+        "short": "0f60c8b",
+        "message": "feat(scripts): add setup-new-machine.sh — full stack setup on fresh machine",
+        "date": "2026-08-27T00:06:09+07:00"
+      },
+      "ahead": 0,
+      "behind": 0
+    },
+    {
+      "name": "hermes-agent-fork",
+      "path": "/home/thucnobita/.hermes/hermes-agent",
+      "branch": "main",
+      "last_commit": {
+        "hash": "3a5e3f13eb4731395f1fd8b6c308ae536453b2bd",
+        "short": "3a5e3f13eb",
+        "message": "mcp-native: port to mcp SDK 2.0.0 (MCPServer API)",
+        "date": "2026-08-24T22:53:25+07:00"
+      },
+      "ahead": 0,
+      "behind": 0,
+      "upstream_lag": 0
+    }
+  ],
+  "skills": {
+    "total": 64,
+    "categories": {
+      "hermes": 2,
+      "communication": 1
+    }
+  },
+  "plugins": [
+    {
+      "name": "advisor-model",
+      "enabled": true
+    },
+    {
+      "name": "agency-agents-router",
+      "enabled": true
+    },
+    {
+      "name": "ast-edit",
+      "enabled": true
+    },
+    {
+      "name": "conflict-resolution",
+      "enabled": true
+    },
+    {
+      "name": "git-sync",
+      "enabled": true
+    },
+    {
+      "name": "orca-status",
+      "enabled": true
+    },
+    {
+      "name": "tool_audit",
+      "enabled": true
+    }
+  ],
+  "cron": {
+    "count": 5,
+    "jobs": [
+      "hermes-stack-daily-backup",
+      "owui-stack-daily-health",
+      "owui-stack-daily-backup",
+      "hermes-upstream-weekly-check",
+      "hermes-profiles-backup"
+    ]
+  },
+  "memory": {
+    "used": 963,
+    "limit": 3000
+  },
+  "gateway": {
+    "status": "ok",
+    "http_code": 200
+  },
+  "containers": [],
+  "timeline": [
+    {
+      "repo": "hermes-sync-git",
+      "time": "2026-08-27T00:06:17+07:00",
+      "message": "hermes-sync: THUCNOBITA 2026-08-26 17:06:17 UTC — feat: hermes-machine-setup skill + sync-all.sh — 7-phase fresh machine orchestration",
+      "sha": "9804e9f"
+    },
+    {
+      "repo": "hermes-openwebui-stack",
+      "time": "2026-08-27T00:06:09+07:00",
+      "message": "feat(scripts): add setup-new-machine.sh — full stack setup on fresh machine",
+      "sha": "0f60c8b"
+    },
+    {
+      "repo": "hermes-sync-git",
+      "time": "2026-08-26T23:50:34+07:00",
+      "message": "hermes-sync: THUCNOBITA 2026-08-26 16:50:34 UTC — memory cleanup: prune 6 entries, compress 5 (98% → 21%)",
+      "sha": "1eb4fe0"
+    },
+    {
+      "repo": "hermes-sync-git",
+      "time": "2026-08-26T23:46:48+07:00",
+      "message": "hermes-sync: THUCNOBITA 2026-08-26 16:46:48 UTC — sync 2026-08-26: config updates, 3 new plugins, 4 new skills, curator state, gateway script, cron jobs",
+      "sha": "5450967"
+    },
+    {
+      "repo": "hermes-agent-fork",
+      "time": "2026-08-26T10:31:33+02:00",
+      "message": "fix(desktop): preserve primary gateway identity across source switches",
+      "sha": "10746a53ba"
+    },
+    {
+      "repo": "hermes-agent-fork",
+      "time": "2026-08-26T09:14:45-07:00",
+      "message": "feat(gateway): updaters pause gateways over the control socket instead of tree-killing them (#92091 step 2)",
+      "sha": "03537d69dc"
+    },
+    {
+      "repo": "hermes-agent-fork",
+      "time": "2026-08-26T09:10:18-07:00",
+      "message": "fix(desktop): guard setPrimaryGatewayConnectionId against non-primary active scopes",
+      "sha": "1a5547c5c5"
+    },
+    {
+      "repo": "hermes-sync-git",
+      "time": "2026-08-25T01:09:12+07:00",
+      "message": "config: cap default max_tokens to 131072 + add alibaba qwen model_overrides; docs: max-output-token-probing reference",
+      "sha": "6d14cad"
+    },
+    {
+      "repo": "hermes-openwebui-stack",
+      "time": "2026-08-25T01:04:03+07:00",
+      "message": "Update OWUI extensions plan with detailed tasks and delegation strategy",
+      "sha": "1025549"
+    },
+    {
+      "repo": "hermes-sync-git",
+      "time": "2026-08-24T22:57:14+07:00",
+      "message": "git-sync: model config to alibaba/qwen, cron state, skill updates (24 Aug)",
+      "sha": "3647fad"
+    }
+  ],
+  "providers": [
+    "alibaba",
+    "alibaba-coding-plan",
+    "copilot",
+    "custom:http://127.0.0.1:8080/v1",
+    "custom:https://ws-8rneu0uxgldbm0c5.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1",
+    "deepinfra",
+    "deepseek",
+    "openai-codex",
+    "opencode-free",
+    "opencode-go",
+    "xai-oauth"
+  ],
+  "updated_at": "2026-08-26T17:39:12Z"
+}
