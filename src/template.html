@@ -295,7 +295,7 @@ footer{
     html+=card('Plugins','🔌',plugBody);
 
     // 5. Cron Jobs
-    const cron=data.cron||[];
+    const cron=Array.isArray(data.cron)?data.cron:(data.cron?.jobs||[]);
     let cronBody='<div style="font-size:1.4rem;font-weight:700;margin-bottom:.5rem">'+cron.length+' <span style="font-size:.85rem;color:var(--muted);font-weight:400">jobs</span></div><ul class="plain">';
     cron.forEach(j=>{cronBody+='<li>⏱ '+esc(j.name||j)+'</li>'});
     cronBody+='</ul>';
@@ -331,7 +331,7 @@ footer{
     html+=card('Stack Containers','🐳',contBody);
 
     // 9. Activity Timeline
-    const activity=data.activity||[];
+    const activity=data.timeline||data.activity||[];
     let tlBody='<div class="timeline">';
     activity.slice(0,10).forEach(a=>{
       tlBody+='<div class="tl-item">'
