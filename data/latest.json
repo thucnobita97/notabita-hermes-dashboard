@@ -31,8 +31,8 @@
       "path": "/home/thucnobita/.hermes/hermes-agent",
       "branch": "main",
       "last_commit": {
-        "hash": "3a5e3f13eb4731395f1fd8b6c308ae536453b2bd",
-        "short": "3a5e3f13eb",
+        "hash": "b4907ad7c55a284872040561edce8f96233a1a71",
+        "short": "b4907ad7c5",
         "message": "mcp-native: port to mcp SDK 2.0.0 (MCPServer API)",
         "date": "2026-08-24T22:53:25+07:00"
       },
@@ -124,21 +124,9 @@
     },
     {
       "repo": "hermes-agent-fork",
-      "time": "2026-08-26T10:31:33+02:00",
-      "message": "fix(desktop): preserve primary gateway identity across source switches",
-      "sha": "10746a53ba"
-    },
-    {
-      "repo": "hermes-agent-fork",
-      "time": "2026-08-26T09:14:45-07:00",
-      "message": "feat(gateway): updaters pause gateways over the control socket instead of tree-killing them (#92091 step 2)",
-      "sha": "03537d69dc"
-    },
-    {
-      "repo": "hermes-agent-fork",
-      "time": "2026-08-26T09:10:18-07:00",
-      "message": "fix(desktop): guard setPrimaryGatewayConnectionId against non-primary active scopes",
-      "sha": "1a5547c5c5"
+      "time": "2026-08-26T10:01:00-07:00",
+      "message": "chore: map contributor email for salvage of #88470",
+      "sha": "3a4c309cfb"
     },
     {
       "repo": "hermes-sync-git",
@@ -157,6 +145,18 @@
       "time": "2026-08-24T22:57:14+07:00",
       "message": "git-sync: model config to alibaba/qwen, cron state, skill updates (24 Aug)",
       "sha": "3647fad"
+    },
+    {
+      "repo": "hermes-agent-fork",
+      "time": "2026-08-24T22:53:25+07:00",
+      "message": "mcp-native: port to mcp SDK 2.0.0 (MCPServer API)",
+      "sha": "b4907ad7c5"
+    },
+    {
+      "repo": "hermes-sync-git",
+      "time": "2026-08-23T04:48:38+07:00",
+      "message": "Sync state: skill ledger + wsl-node-toolchain skill, repo-recon reference, config coding_instructions, cron jobs, memory updates",
+      "sha": "3c6666d"
     }
   ],
   "providers": [
@@ -172,5 +172,5 @@
     "opencode-go",
     "xai-oauth"
   ],
-  "updated_at": "2026-08-26T17:42:54Z"
+  "updated_at": "2026-08-26T17:44:53Z"
 }
