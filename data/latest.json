@@ -18,10 +18,10 @@
       "path": "/home/thucnobita/dev/hermes-openwebui-stack",
       "branch": "main",
       "last_commit": {
-        "hash": "ef455b999f1ea88192e5ed2204a06dce507de8c9",
-        "short": "ef455b9",
-        "message": "chore: upgrade Open WebUI from v0.11.0 to v0.11.1",
-        "date": "2026-08-31T21:51:17+07:00"
+        "hash": "48c3c97d7269a41b91c2e757841e47365ee38e6c",
+        "short": "48c3c97",
+        "message": "docs: add comprehensive TODO list for OWUI context integration plan",
+        "date": "2026-09-01T01:42:51+07:00"
       },
       "ahead": 0,
       "behind": 0
@@ -31,8 +31,8 @@
       "path": "/home/thucnobita/.hermes/hermes-agent",
       "branch": "main",
       "last_commit": {
-        "hash": "a894e1bf711ec9d0018014d7877624e967b3b6ac",
-        "short": "a894e1bf71",
+        "hash": "255d187847802957d4fc5a2fcafe2cb300744305",
+        "short": "255d187847",
         "message": "mcp-native: port to mcp SDK 2.0.0 (MCPServer API)",
         "date": "2026-08-24T22:53:25+07:00"
       },
@@ -83,14 +83,10 @@
     }
   ],
   "cron": {
-    "count": 6,
+    "count": 2,
     "jobs": [
-      "hermes-stack-daily-backup",
       "owui-stack-daily-health",
-      "owui-stack-daily-backup",
-      "hermes-upstream-weekly-check",
-      "hermes-profiles-backup",
-      "oikb-stack-docs-sync"
+      "owui-stack-daily-backup"
     ]
   },
   "memory": {
@@ -98,20 +94,52 @@
     "limit": 3000
   },
   "gateway": {
-    "status": "ok",
-    "http_code": 200
+    "status": "down",
+    "http_code": 0
   },
   "containers": [
-    {
-      "name": "hermes-mongodb",
-      "status": "running"
-    },
     {
       "name": "open-webui",
       "status": "running"
     }
   ],
   "timeline": [
+    {
+      "repo": "hermes-openwebui-stack",
+      "time": "2026-09-01T01:42:51+07:00",
+      "message": "docs: add comprehensive TODO list for OWUI context integration plan",
+      "sha": "48c3c97"
+    },
+    {
+      "repo": "hermes-openwebui-stack",
+      "time": "2026-09-01T01:35:03+07:00",
+      "message": "docs: upgrade OWUI context integration plan to production-grade (v2)",
+      "sha": "9785fff"
+    },
+    {
+      "repo": "hermes-openwebui-stack",
+      "time": "2026-09-01T00:54:32+07:00",
+      "message": "docs: add OWUI context integration framework plan",
+      "sha": "aacfd5a"
+    },
+    {
+      "repo": "hermes-openwebui-stack",
+      "time": "2026-09-01T00:04:23+07:00",
+      "message": "feat: reset owui to standalone stock",
+      "sha": "4955dd5"
+    },
+    {
+      "repo": "hermes-openwebui-stack",
+      "time": "2026-08-31T23:30:02+07:00",
+      "message": "pre-reset: before full owui cleanup",
+      "sha": "b660b14"
+    },
+    {
+      "repo": "hermes-openwebui-stack",
+      "time": "2026-08-31T22:15:05+07:00",
+      "message": "docs: update OWUI upgrade v0.11.1 status",
+      "sha": "137e335"
+    },
     {
       "repo": "hermes-openwebui-stack",
       "time": "2026-08-31T21:51:17+07:00",
@@ -125,52 +153,16 @@
       "sha": "d12a314"
     },
     {
-      "repo": "hermes-sync-git",
-      "time": "2026-08-31T01:43:48+07:00",
-      "message": "sync: update OWUI integration skill + demo v2 findings",
-      "sha": "048923a"
+      "repo": "hermes-agent-fork",
+      "time": "2026-08-31T06:44:11-07:00",
+      "message": "test(buzz): stub CLI in thread-root propagation test so it never execs a real subprocess",
+      "sha": "4b1374bec1"
     },
     {
-      "repo": "hermes-openwebui-stack",
-      "time": "2026-08-31T01:42:55+07:00",
-      "message": "docs: complete OWUI Demo v2 execution with findings",
-      "sha": "c8f18aa"
-    },
-    {
-      "repo": "hermes-sync-git",
-      "time": "2026-08-31T00:19:34+07:00",
-      "message": "hermes-sync: THUCNOBITA 2026-08-30 17:19:34 UTC — Update hermes-openwebui-stack AGENTS.md to reference PLAN-OPENDESIGN.md (in progress)",
-      "sha": "4ea7cec"
-    },
-    {
-      "repo": "hermes-openwebui-stack",
-      "time": "2026-08-31T00:19:20+07:00",
-      "message": "Update AGENTS.md: add PLAN-OPENDESIGN.md to plan list (in progress)",
-      "sha": "fd87089"
-    },
-    {
-      "repo": "hermes-sync-git",
-      "time": "2026-08-30T23:33:08+07:00",
-      "message": "Add Ghidra binary analysis MCP server integration",
-      "sha": "6a60e25"
-    },
-    {
-      "repo": "hermes-sync-git",
-      "time": "2026-08-30T23:24:31+07:00",
-      "message": "hermes-sync: THUCNOBITA 2026-08-30 16:24:31 UTC — Update skills: add OpenDesign integration references, update MCP compat and OWUI integration skills",
-      "sha": "80ddf73"
-    },
-    {
-      "repo": "hermes-openwebui-stack",
-      "time": "2026-08-30T23:23:09+07:00",
-      "message": "Add OpenDesign integration plan (v2)",
-      "sha": "0f07b65"
-    },
-    {
-      "repo": "hermes-sync-git",
-      "time": "2026-08-30T03:09:42+07:00",
-      "message": "hermes-sync: THUCNOBITA 2026-08-29 20:09:42 UTC — fix dev-agent loading chain: snowballstemmer restored, profiles cleanup follow-ups",
-      "sha": "ffd41d2"
+      "repo": "hermes-agent-fork",
+      "time": "2026-08-31T06:42:29-07:00",
+      "message": "test(buzz): E2E regressions for thread-root anchoring, reply_in_thread honoring, progress routing, display tier",
+      "sha": "06a627d7c2"
     }
   ],
   "providers": [
@@ -188,5 +180,5 @@
     "opencode-go",
     "xai-oauth"
   ],
-  "updated_at": "2026-08-31T14:52:24Z"
+  "updated_at": "2026-08-31T18:45:17Z"
 }
