@@ -5,10 +5,10 @@
       "path": "/home/thucnobita/.hermes",
       "branch": "main",
       "last_commit": {
-        "hash": "9804e9f5a83187c433a3024458a8b38400f2030c",
-        "short": "9804e9f",
-        "message": "hermes-sync: THUCNOBITA 2026-08-26 17:06:17 UTC — feat: hermes-machine-setup skill + sync-all.sh — 7-phase fresh machine orchestration",
-        "date": "2026-08-27T00:06:17+07:00"
+        "hash": "d12a3148cf7686f860be66dda04b44373d0ae633",
+        "short": "d12a314",
+        "message": "sync: update skill registry + slash-commands reference after hermes update",
+        "date": "2026-08-31T21:16:49+07:00"
       },
       "ahead": 0,
       "behind": 0
@@ -18,10 +18,10 @@
       "path": "/home/thucnobita/dev/hermes-openwebui-stack",
       "branch": "main",
       "last_commit": {
-        "hash": "0f60c8b797058cbb30a8919a44481ec0d6f893d4",
-        "short": "0f60c8b",
-        "message": "feat(scripts): add setup-new-machine.sh — full stack setup on fresh machine",
-        "date": "2026-08-27T00:06:09+07:00"
+        "hash": "ef455b999f1ea88192e5ed2204a06dce507de8c9",
+        "short": "ef455b9",
+        "message": "chore: upgrade Open WebUI from v0.11.0 to v0.11.1",
+        "date": "2026-08-31T21:51:17+07:00"
       },
       "ahead": 0,
       "behind": 0
@@ -31,8 +31,8 @@
       "path": "/home/thucnobita/.hermes/hermes-agent",
       "branch": "main",
       "last_commit": {
-        "hash": "b4907ad7c55a284872040561edce8f96233a1a71",
-        "short": "b4907ad7c5",
+        "hash": "a894e1bf711ec9d0018014d7877624e967b3b6ac",
+        "short": "a894e1bf71",
         "message": "mcp-native: port to mcp SDK 2.0.0 (MCPServer API)",
         "date": "2026-08-24T22:53:25+07:00"
       },
@@ -42,7 +42,7 @@
     }
   ],
   "skills": {
-    "total": 64,
+    "total": 68,
     "categories": {
       "hermes": 2,
       "communication": 1
@@ -59,6 +59,10 @@
     },
     {
       "name": "ast-edit",
+      "enabled": true
+    },
+    {
+      "name": "browser-auto-launch",
       "enabled": true
     },
     {
@@ -79,89 +83,101 @@
     }
   ],
   "cron": {
-    "count": 5,
+    "count": 6,
     "jobs": [
       "hermes-stack-daily-backup",
       "owui-stack-daily-health",
       "owui-stack-daily-backup",
       "hermes-upstream-weekly-check",
-      "hermes-profiles-backup"
+      "hermes-profiles-backup",
+      "oikb-stack-docs-sync"
     ]
   },
   "memory": {
-    "used": 963,
+    "used": 2334,
     "limit": 3000
   },
   "gateway": {
     "status": "ok",
     "http_code": 200
   },
-  "containers": [],
+  "containers": [
+    {
+      "name": "hermes-mongodb",
+      "status": "running"
+    },
+    {
+      "name": "open-webui",
+      "status": "running"
+    }
+  ],
   "timeline": [
     {
+      "repo": "hermes-openwebui-stack",
+      "time": "2026-08-31T21:51:17+07:00",
+      "message": "chore: upgrade Open WebUI from v0.11.0 to v0.11.1",
+      "sha": "ef455b9"
+    },
+    {
       "repo": "hermes-sync-git",
-      "time": "2026-08-27T00:06:17+07:00",
-      "message": "hermes-sync: THUCNOBITA 2026-08-26 17:06:17 UTC — feat: hermes-machine-setup skill + sync-all.sh — 7-phase fresh machine orchestration",
-      "sha": "9804e9f"
+      "time": "2026-08-31T21:16:49+07:00",
+      "message": "sync: update skill registry + slash-commands reference after hermes update",
+      "sha": "d12a314"
+    },
+    {
+      "repo": "hermes-sync-git",
+      "time": "2026-08-31T01:43:48+07:00",
+      "message": "sync: update OWUI integration skill + demo v2 findings",
+      "sha": "048923a"
     },
     {
       "repo": "hermes-openwebui-stack",
-      "time": "2026-08-27T00:06:09+07:00",
-      "message": "feat(scripts): add setup-new-machine.sh — full stack setup on fresh machine",
-      "sha": "0f60c8b"
+      "time": "2026-08-31T01:42:55+07:00",
+      "message": "docs: complete OWUI Demo v2 execution with findings",
+      "sha": "c8f18aa"
     },
     {
       "repo": "hermes-sync-git",
-      "time": "2026-08-26T23:50:34+07:00",
-      "message": "hermes-sync: THUCNOBITA 2026-08-26 16:50:34 UTC — memory cleanup: prune 6 entries, compress 5 (98% → 21%)",
-      "sha": "1eb4fe0"
-    },
-    {
-      "repo": "hermes-sync-git",
-      "time": "2026-08-26T23:46:48+07:00",
-      "message": "hermes-sync: THUCNOBITA 2026-08-26 16:46:48 UTC — sync 2026-08-26: config updates, 3 new plugins, 4 new skills, curator state, gateway script, cron jobs",
-      "sha": "5450967"
-    },
-    {
-      "repo": "hermes-agent-fork",
-      "time": "2026-08-26T10:01:00-07:00",
-      "message": "chore: map contributor email for salvage of #88470",
-      "sha": "3a4c309cfb"
-    },
-    {
-      "repo": "hermes-sync-git",
-      "time": "2026-08-25T01:09:12+07:00",
-      "message": "config: cap default max_tokens to 131072 + add alibaba qwen model_overrides; docs: max-output-token-probing reference",
-      "sha": "6d14cad"
+      "time": "2026-08-31T00:19:34+07:00",
+      "message": "hermes-sync: THUCNOBITA 2026-08-30 17:19:34 UTC — Update hermes-openwebui-stack AGENTS.md to reference PLAN-OPENDESIGN.md (in progress)",
+      "sha": "4ea7cec"
     },
     {
       "repo": "hermes-openwebui-stack",
-      "time": "2026-08-25T01:04:03+07:00",
-      "message": "Update OWUI extensions plan with detailed tasks and delegation strategy",
-      "sha": "1025549"
+      "time": "2026-08-31T00:19:20+07:00",
+      "message": "Update AGENTS.md: add PLAN-OPENDESIGN.md to plan list (in progress)",
+      "sha": "fd87089"
     },
     {
       "repo": "hermes-sync-git",
-      "time": "2026-08-24T22:57:14+07:00",
-      "message": "git-sync: model config to alibaba/qwen, cron state, skill updates (24 Aug)",
-      "sha": "3647fad"
-    },
-    {
-      "repo": "hermes-agent-fork",
-      "time": "2026-08-24T22:53:25+07:00",
-      "message": "mcp-native: port to mcp SDK 2.0.0 (MCPServer API)",
-      "sha": "b4907ad7c5"
+      "time": "2026-08-30T23:33:08+07:00",
+      "message": "Add Ghidra binary analysis MCP server integration",
+      "sha": "6a60e25"
     },
     {
       "repo": "hermes-sync-git",
-      "time": "2026-08-23T04:48:38+07:00",
-      "message": "Sync state: skill ledger + wsl-node-toolchain skill, repo-recon reference, config coding_instructions, cron jobs, memory updates",
-      "sha": "3c6666d"
+      "time": "2026-08-30T23:24:31+07:00",
+      "message": "hermes-sync: THUCNOBITA 2026-08-30 16:24:31 UTC — Update skills: add OpenDesign integration references, update MCP compat and OWUI integration skills",
+      "sha": "80ddf73"
+    },
+    {
+      "repo": "hermes-openwebui-stack",
+      "time": "2026-08-30T23:23:09+07:00",
+      "message": "Add OpenDesign integration plan (v2)",
+      "sha": "0f07b65"
+    },
+    {
+      "repo": "hermes-sync-git",
+      "time": "2026-08-30T03:09:42+07:00",
+      "message": "hermes-sync: THUCNOBITA 2026-08-29 20:09:42 UTC — fix dev-agent loading chain: snowballstemmer restored, profiles cleanup follow-ups",
+      "sha": "ffd41d2"
     }
   ],
   "providers": [
     "alibaba",
+    "alibaba-cn",
     "alibaba-coding-plan",
+    "alibaba-coding-plan-cn",
     "copilot",
     "custom:http://127.0.0.1:8080/v1",
     "custom:https://ws-8rneu0uxgldbm0c5.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1",
@@ -172,5 +188,5 @@
     "opencode-go",
     "xai-oauth"
   ],
-  "updated_at": "2026-08-26T17:44:53Z"
+  "updated_at": "2026-08-31T14:52:24Z"
 }
