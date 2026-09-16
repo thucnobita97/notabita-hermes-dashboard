@@ -5,10 +5,10 @@
       "path": "/home/thucnobita/.hermes",
       "branch": "main",
       "last_commit": {
-        "hash": "d12a3148cf7686f860be66dda04b44373d0ae633",
-        "short": "d12a314",
-        "message": "sync: update skill registry + slash-commands reference after hermes update",
-        "date": "2026-08-31T21:16:49+07:00"
+        "hash": "6583a90c8f37b2d25ad5eb10c2d0274c4dea20b6",
+        "short": "6583a90",
+        "message": "hermes-sync: THUCNOBITA 2026-09-16 16:38:34 UTC — sync: update cron jobs and skill references",
+        "date": "2026-09-16T23:38:34+07:00"
       },
       "ahead": 0,
       "behind": 0
@@ -18,10 +18,10 @@
       "path": "/home/thucnobita/dev/hermes-openwebui-stack",
       "branch": "main",
       "last_commit": {
-        "hash": "48c3c97d7269a41b91c2e757841e47365ee38e6c",
-        "short": "48c3c97",
-        "message": "docs: add comprehensive TODO list for OWUI context integration plan",
-        "date": "2026-09-01T01:42:51+07:00"
+        "hash": "6373f26991bddcfac3d83539a0a871f45684928f",
+        "short": "6373f26",
+        "message": "feat(plan-14-15): APK screen replication + performance optimization",
+        "date": "2026-09-13T23:06:13+07:00"
       },
       "ahead": 0,
       "behind": 0
@@ -31,10 +31,10 @@
       "path": "/home/thucnobita/.hermes/hermes-agent",
       "branch": "main",
       "last_commit": {
-        "hash": "255d187847802957d4fc5a2fcafe2cb300744305",
-        "short": "255d187847",
-        "message": "mcp-native: port to mcp SDK 2.0.0 (MCPServer API)",
-        "date": "2026-08-24T22:53:25+07:00"
+        "hash": "948e9706618220839a20c33c2fc5c19de074d835",
+        "short": "948e970661",
+        "message": "fix(vault): default detected password managers to enabled (opt-out contract) (#109558)",
+        "date": "2026-09-16T17:26:13+03:00"
       },
       "ahead": 0,
       "behind": 0,
@@ -42,7 +42,7 @@
     }
   ],
   "skills": {
-    "total": 68,
+    "total": 80,
     "categories": {
       "hermes": 2,
       "communication": 1
@@ -90,79 +90,87 @@
     ]
   },
   "memory": {
-    "used": 2334,
+    "used": 2971,
     "limit": 3000
   },
   "gateway": {
-    "status": "down",
-    "http_code": 0
+    "status": "ok",
+    "http_code": 200
   },
   "containers": [
     {
       "name": "open-webui",
       "status": "running"
+    },
+    {
+      "name": "rag-backend",
+      "status": "running"
+    },
+    {
+      "name": "rag-redis",
+      "status": "running"
     }
   ],
   "timeline": [
     {
-      "repo": "hermes-openwebui-stack",
-      "time": "2026-09-01T01:42:51+07:00",
-      "message": "docs: add comprehensive TODO list for OWUI context integration plan",
-      "sha": "48c3c97"
-    },
-    {
-      "repo": "hermes-openwebui-stack",
-      "time": "2026-09-01T01:35:03+07:00",
-      "message": "docs: upgrade OWUI context integration plan to production-grade (v2)",
-      "sha": "9785fff"
-    },
-    {
-      "repo": "hermes-openwebui-stack",
-      "time": "2026-09-01T00:54:32+07:00",
-      "message": "docs: add OWUI context integration framework plan",
-      "sha": "aacfd5a"
-    },
-    {
-      "repo": "hermes-openwebui-stack",
-      "time": "2026-09-01T00:04:23+07:00",
-      "message": "feat: reset owui to standalone stock",
-      "sha": "4955dd5"
-    },
-    {
-      "repo": "hermes-openwebui-stack",
-      "time": "2026-08-31T23:30:02+07:00",
-      "message": "pre-reset: before full owui cleanup",
-      "sha": "b660b14"
-    },
-    {
-      "repo": "hermes-openwebui-stack",
-      "time": "2026-08-31T22:15:05+07:00",
-      "message": "docs: update OWUI upgrade v0.11.1 status",
-      "sha": "137e335"
-    },
-    {
-      "repo": "hermes-openwebui-stack",
-      "time": "2026-08-31T21:51:17+07:00",
-      "message": "chore: upgrade Open WebUI from v0.11.0 to v0.11.1",
-      "sha": "ef455b9"
-    },
-    {
       "repo": "hermes-sync-git",
-      "time": "2026-08-31T21:16:49+07:00",
-      "message": "sync: update skill registry + slash-commands reference after hermes update",
-      "sha": "d12a314"
+      "time": "2026-09-16T23:38:34+07:00",
+      "message": "hermes-sync: THUCNOBITA 2026-09-16 16:38:34 UTC — sync: update cron jobs and skill references",
+      "sha": "6583a90"
     },
     {
       "repo": "hermes-agent-fork",
-      "time": "2026-08-31T06:44:11-07:00",
-      "message": "test(buzz): stub CLI in thread-root propagation test so it never execs a real subprocess",
-      "sha": "4b1374bec1"
+      "time": "2026-09-16T17:26:13+03:00",
+      "message": "fix(vault): default detected password managers to enabled (opt-out contract) (#109558)",
+      "sha": "948e970661"
     },
     {
       "repo": "hermes-agent-fork",
-      "time": "2026-08-31T06:42:29-07:00",
-      "message": "test(buzz): E2E regressions for thread-root anchoring, reply_in_thread honoring, progress routing, display tier",
-      "sha": "06a627d7c2"
+      "time": "2026-09-16T13:10:03+02:00",
+      "message": "R4: pin hidden owner hint scope for hydration and refresh",
+      "sha": "a63d6af683"
+    },
+    {
+      "repo": "hermes-agent-fork",
+      "time": "2026-09-16T12:53:59+02:00",
+      "message": "R5: use the owner route type and colocate resolver tests",
+      "sha": "22db213917"
+    },
+    {
+      "repo": "hermes-agent-fork",
+      "time": "2026-09-16T09:46:44-04:00",
+      "message": "fix(desktop): send Cloudflare Access headers on OAuth login (#110987)",
+      "sha": "03b0c79472"
+    },
+    {
+      "repo": "hermes-agent-fork",
+      "time": "2026-09-16T04:53:15-07:00",
+      "message": "test(desktop): cover shared composer focus and draft ownership",
+      "sha": "784d5c3f9c"
+    },
+    {
+      "repo": "hermes-agent-fork",
+      "time": "2026-09-16T04:53:15-07:00",
+      "message": "feat(desktop): share the floating composer across chat panes",
+      "sha": "087fbe3847"
+    },
+    {
+      "repo": "hermes-agent-fork",
+      "time": "2026-09-16T04:32:42-07:00",
+      "message": "fix(desktop): align timeline idle checks and skip unsaved history work",
+      "sha": "657ee57a99"
+    },
+    {
+      "repo": "hermes-agent-fork",
+      "time": "2026-09-16T04:22:11-07:00",
+      "message": "perf(desktop): virtualize the timeline and bound history jumps",
+      "sha": "2efbbef981"
+    },
+    {
+      "repo": "hermes-agent-fork",
+      "time": "2026-09-16T04:22:11-07:00",
+      "message": "fix(desktop): show scrollbars only in hovered regions without fading",
+      "sha": "586737c5ce"
     }
   ],
   "providers": [
@@ -170,6 +178,8 @@
     "alibaba-cn",
     "alibaba-coding-plan",
     "alibaba-coding-plan-cn",
+    "alibaba-token-plan",
+    "alibaba-token-plan-cn",
     "copilot",
     "custom:http://127.0.0.1:8080/v1",
     "custom:https://ws-8rneu0uxgldbm0c5.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1",
@@ -180,5 +190,5 @@
     "opencode-go",
     "xai-oauth"
   ],
-  "updated_at": "2026-08-31T18:47:58Z"
+  "updated_at": "2026-09-16T17:15:09Z"
 }
