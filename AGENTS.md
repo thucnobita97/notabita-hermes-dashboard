@@ -88,15 +88,18 @@ npm run typecheck
 
 ## Current status
 
-**Phase:** Planning approved, pending implementation (2026-09-17)
+**Phase:** Implementation complete — cards API mismatch fixed (2026-09-17)
 
-**Next steps:**
-1. Setup Next.js project (Phase 1)
-2. Implement API client + hooks (Phase 2)
-3. Build Overview, Sync, Setup pages (Phases 3-5)
-4. UI polish + testing (Phase 6)
+**Completed:**
+1. ✅ Next.js project setup (Phase 1)
+2. ✅ API client + hooks (Phase 2)
+3. ✅ Overview, Sync, Setup pages (Phases 3-5)
+4. ✅ UI polish + build passing (Phase 6)
+5. ✅ Cards fixed to match actual Hermes API response
 
-**Timeline:** 7-10 days
+**Status:** Dashboard builds and runs. All 6 overview cards display real data or appropriate placeholders.
+
+**Timeline:** Done
 
 ## Project skills
 
