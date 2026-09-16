@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
 import { usePolling } from '@/hooks/use-polling'
-import { clientApi, type StatusResponse } from '@/lib/client-api'
+import { clientApi, type StatusResponse, type Skill } from '@/lib/client-api'
 import { toast } from 'sonner'
 
 import { ReposCard } from '@/components/cards/ReposCard'
@@ -26,6 +26,12 @@ export default function OverviewPage() {
     error,
   } = usePolling<StatusResponse>(() => clientApi.getStatus(), 30_000)
 
+  const {
+    data: skills,
+    loading: skillsLoading,
+    error: skillsError,
+  } = usePolling<Skill[]>(() => clientApi.getSkills(), 60_000)
+
   // Show toast on API error
   useEffect(() => {
     if (error) {
@@ -34,6 +40,14 @@ export default function OverviewPage() {
       })
     }
   }, [error])
+
+  useEffect(() => {
+    if (skillsError) {
+      toast.error('Failed to fetch skills', {
+        description: skillsError.message,
+      })
+    }
+  }, [skillsError])
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -64,7 +78,7 @@ export default function OverviewPage() {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           <GatewayCard data={status} loading={loading} />
           <ReposCard />
-          <SkillsCard data={status} loading={loading} />
+          <SkillsCard skills={skills ?? []} loading={skillsLoading} />
           <PluginsCard data={status} loading={loading} />
           <MemoryCard data={status} loading={loading} />
           <ContainersCard data={status} loading={loading} />

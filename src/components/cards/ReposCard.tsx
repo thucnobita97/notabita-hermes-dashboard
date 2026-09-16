@@ -25,13 +25,21 @@ function RepoRow({ repo }: { repo: (typeof REPOS)[number] }) {
     )
   }
 
+  // status === null means the repo is clean (no changes)
+  const isClean = status === null
   const branch = status?.branch ?? '—'
   const ahead = status?.ahead ?? 0
   const behind = status?.behind ?? 0
 
   let syncVariant: 'default' | 'secondary' | 'destructive' | 'outline' = 'default'
   let syncLabel = 'Synced'
-  if (behind > 0) {
+  let syncClassName = ''
+
+  if (isClean) {
+    syncVariant = 'default'
+    syncLabel = 'Clean ✓'
+    syncClassName = 'bg-green-600 hover:bg-green-700'
+  } else if (behind > 0) {
     syncVariant = 'destructive'
     syncLabel = `↓${behind} behind`
   } else if (ahead > 0) {
@@ -51,7 +59,7 @@ function RepoRow({ repo }: { repo: (typeof REPOS)[number] }) {
         <p className="truncate text-sm font-medium">{repo.name}</p>
         <p className="truncate text-xs text-muted-foreground">{branch}</p>
       </div>
-      <Badge variant={syncVariant}>{syncLabel}</Badge>
+      <Badge variant={syncVariant} className={syncClassName || undefined}>{syncLabel}</Badge>
     </button>
   )
 }

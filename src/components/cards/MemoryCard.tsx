@@ -9,23 +9,34 @@ interface Props {
   loading: boolean
 }
 
-function formatBytes(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
-  if (bytes < 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
-  return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`
-}
-
 export function MemoryCard({ data, loading }: Props) {
-  const rec = data as Record<string, unknown> | null
-  const used = rec && typeof rec.memory_used === 'number' ? (rec.memory_used as number) : null
-  const limit = rec && typeof rec.memory_limit === 'number' ? (rec.memory_limit as number) : null
+  const mem = data?.memory ?? null
+  const disk = data?.disk ?? null
 
-  const pct = used != null && limit != null && limit > 0
-    ? Math.min(100, Math.round((used / limit) * 100))
+  const usedMB = mem?.gateway_rss_mb ?? null
+  const totalMB = mem?.system_total_mb ?? null
+  const availMB = mem?.system_available_mb ?? null
+  const pressure = mem?.pressure ?? null
+
+  const pct = usedMB != null && totalMB != null && totalMB > 0
+    ? Math.min(100, (usedMB / totalMB) * 100)
     : null
 
-  const warning = pct != null && pct > 80
+  const totalGB = totalMB != null ? (totalMB / 1024).toFixed(1) : null
+  const availGB = availMB != null ? (availMB / 1024).toFixed(1) : null
+
+  const pressureColor =
+    pressure === 'critical' ? 'bg-destructive' :
+    pressure === 'warning' ? 'bg-yellow-500' :
+    'bg-primary'
+
+  const pressureTextColor =
+    pressure === 'critical' ? 'text-destructive' :
+    pressure === 'warning' ? 'text-yellow-500' :
+    'text-primary'
+
+  const diskUsedPct = disk?.used_percent ?? null
+  const diskFreeGB = disk?.free_mb != null ? (disk.free_mb / 1024).toFixed(1) : null
 
   return (
     <Card>
@@ -40,21 +51,50 @@ export function MemoryCard({ data, loading }: Props) {
           </div>
         ) : pct != null ? (
           <>
+            {/* Memory section */}
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-xs font-medium">Memory Usage</span>
+              {pressure && (
+                <span className={`text-xs font-medium capitalize ${pressureTextColor}`}>
+                  {pressure}
+                </span>
+              )}
+            </div>
             <div className="mb-2 h-3 w-full overflow-hidden rounded-full bg-secondary">
               <div
-                className={`h-full rounded-full transition-all ${
-                  warning ? 'bg-destructive' : 'bg-primary'
-                }`}
+                className={`h-full rounded-full transition-all ${pressureColor}`}
                 style={{ width: `${pct}%` }}
               />
             </div>
             <div className="flex items-center justify-between text-xs text-muted-foreground">
-              <span>{used != null ? formatBytes(used) : '—'}</span>
-              <span>{limit != null ? formatBytes(limit) : '—'}</span>
+              <span>{usedMB != null ? `${usedMB} MB` : '—'} / {totalGB != null ? `${totalGB} GB` : '—'}</span>
             </div>
-            <p className={`mt-1 text-xs font-medium ${warning ? 'text-destructive' : 'text-muted-foreground'}`}>
-              {pct}% used{warning ? ' — high usage' : ''}
-            </p>
+            {availGB != null && (
+              <p className="mt-1 text-xs text-muted-foreground">
+                Available: {availGB} GB
+              </p>
+            )}
+
+            {/* Disk section */}
+            {disk && (
+              <div className="mt-4 pt-3 border-t">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs font-medium">Disk Usage</span>
+                  {diskUsedPct != null && (
+                    <span className="text-xs text-muted-foreground">{diskUsedPct.toFixed(1)}%</span>
+                  )}
+                </div>
+                <div className="mb-2 h-3 w-full overflow-hidden rounded-full bg-secondary">
+                  <div
+                    className="h-full rounded-full bg-primary transition-all"
+                    style={{ width: `${diskUsedPct ?? 0}%` }}
+                  />
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  {diskFreeGB != null ? `${diskFreeGB} GB free` : '—'}
+                </p>
+              </div>
+            )}
           </>
         ) : (
           <p className="text-sm text-muted-foreground">No memory data</p>

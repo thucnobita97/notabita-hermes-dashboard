@@ -38,12 +38,35 @@ export interface PushResponse {
 }
 
 export interface StatusResponse {
-  status: string;
   version: string;
-  uptime: number;
-  model?: string;
-  provider?: string;
+  gateway_running: boolean;
+  gateway_state: string;
+  gateway_pid: number;
+  active_sessions: number;
+  overall: string;
+  memory: {
+    pressure: string;
+    gateway_rss_mb: number;
+    system_total_mb: number;
+    system_available_mb: number;
+  };
+  disk: {
+    total_mb: number;
+    free_mb: number;
+    used_percent: number;
+  };
+  profiles: string[];
+  components: Record<string, { status: string; [k: string]: unknown }>;
   [key: string]: unknown;
+}
+
+export interface Skill {
+  name: string;
+  description?: string;
+  category: string | null;
+  enabled: boolean;
+  usage: number;
+  provenance: string;
 }
 
 export class ClientApiError extends Error {
@@ -117,6 +140,8 @@ export const clientApi = {
 
   push: (path: string) =>
     request<PushResponse>("POST", "/git/review/push", { path }),
+
+  getSkills: () => request<Skill[]>("GET", "/skills"),
 
   getConfig: () => request<Record<string, unknown>>("GET", "/config"),
   getEnv: () => request<Record<string, unknown>>("GET", "/env"),

@@ -10,34 +10,8 @@ interface Props {
   loading: boolean
 }
 
-function formatUptime(seconds: number): string {
-  const d = Math.floor(seconds / 86400)
-  const h = Math.floor((seconds % 86400) / 3600)
-  const m = Math.floor((seconds % 3600) / 60)
-  if (d > 0) return `${d}d ${h}h`
-  if (h > 0) return `${h}h ${m}m`
-  return `${m}m`
-}
-
 export function GatewayCard({ data, loading }: Props) {
-  const rec = data as Record<string, unknown> | null
-
-  // Try gateway sub-object first, fall back to top-level status
-  const gateway = rec && typeof rec.gateway === 'object' && rec.gateway !== null
-    ? (rec.gateway as Record<string, unknown>)
-    : null
-
-  const statusStr = gateway
-    ? typeof gateway.status === 'string' ? gateway.status : 'unknown'
-    : data?.status ?? 'unknown'
-
-  const httpCode = gateway && typeof gateway.http_code === 'number'
-    ? (gateway.http_code as number)
-    : null
-
-  const uptime = data?.uptime ?? (gateway && typeof gateway.uptime === 'number' ? gateway.uptime as number : null)
-
-  const isUp = statusStr === 'ok' || statusStr === 'up' || statusStr === 'running' || statusStr === 'connected'
+  const isUp = data?.gateway_running ?? false
 
   return (
     <Card>
@@ -59,18 +33,24 @@ export function GatewayCard({ data, loading }: Props) {
                 }`}
               />
               <Badge variant={isUp ? 'default' : 'destructive'}>
-                {statusStr}
+                {data?.gateway_state ?? 'unknown'}
               </Badge>
             </div>
             <div className="mt-3 flex flex-col gap-1 text-sm text-muted-foreground">
-              {httpCode != null && (
-                <p>HTTP: <span className="font-mono text-foreground">{httpCode}</span></p>
-              )}
-              {uptime != null && (
-                <p>Uptime: <span className="font-mono text-foreground">{formatUptime(uptime)}</span></p>
-              )}
               {data?.version && (
-                <p>Version: <span className="font-mono text-foreground">{data.version}</span></p>
+                <p>Version: <span className="font-mono text-foreground">v{data.version}</span></p>
+              )}
+              {data?.gateway_pid != null && (
+                <p>PID: <span className="font-mono text-foreground">{data.gateway_pid}</span></p>
+              )}
+              {data?.active_sessions != null && (
+                <p>Active sessions: <span className="font-mono text-foreground">{data.active_sessions}</span></p>
+              )}
+              {data?.profiles && (
+                <p>Profiles: <span className="font-mono text-foreground">{data.profiles.length}</span></p>
+              )}
+              {data?.overall && (
+                <p>Health: <span className="font-mono text-foreground">{data.overall}</span></p>
               )}
             </div>
           </>
